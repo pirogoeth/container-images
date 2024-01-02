@@ -14,6 +14,7 @@ on:
     paths: 
     - ".github/workflows/build-n8n.yml"
     - "n8n/**"
+  workflow_dispatch:
 
 jobs:
   build-docker-image:
@@ -23,6 +24,6 @@ jobs:
       output-repository-path: "${{ github.repository }}/n8n"
       dockerfile-path: "./n8n/Dockerfile"
       image-build-args: |
-        N8N_VERSION=1.20.0
+        N8N_VERSION=${{ vars.N8N_VERSION }}
       image-tags: |
-        type=raw,value=1.20.0
+        type=raw,value=${{ vars.N8N_VERSION }}
