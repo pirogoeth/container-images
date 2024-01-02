@@ -26,4 +26,4 @@ jobs:
       output-repository-path: "${{ github.repository }}/n8n"
       dockerfile-path: "./n8n/Dockerfile"
       image-build-args: |
-        N8N_VERSION=${{ env.N8N_VERSION }}
+        N8N_VERSION=$N8N_VERSION
