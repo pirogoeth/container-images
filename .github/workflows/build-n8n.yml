@@ -17,16 +17,12 @@ on:
 
 jobs:
   build-docker-image:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: pirogoeth/workflows/.github/workflows/docker-generic.yml@main
-      env:
-        N8N_VERSION: 1.20.0
-      with:
-        output-registry: "ghcr.io"
-        output-repository-path: "${{ github.repository }}/n8n"
-        dockerfile-path: "./n8n/Dockerfile"
-        image-build-args: |
-          N8N_VERSION=$N8N_VERSION
-        image-tags: |
-          type=raw,value=$N8N_VERSION
+    uses: pirogoeth/workflows/.github/workflows/docker-generic.yml@main
+    with:
+      output-registry: "ghcr.io"
+      output-repository-path: "${{ github.repository }}/n8n"
+      dockerfile-path: "./n8n/Dockerfile"
+      image-build-args: |
+        N8N_VERSION=1.20.0
+      image-tags: |
+        type=raw,value=1.20.0
