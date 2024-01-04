@@ -2,6 +2,10 @@
 
 name: Build n8n image
 
+inputs:
+  n8n-version:
+    description: "n8n version to build"
+
 on:
   push:
     branches: [ "main" ]
@@ -24,6 +28,6 @@ jobs:
       output-repository-path: "${{ github.repository }}/n8n"
       dockerfile-path: "./n8n/Dockerfile"
       image-build-args: |
-        N8N_VERSION=${{ vars.N8N_VERSION }}
+        N8N_VERSION=${{ inputs.n8n-version || vars.N8N_VERSION }}
       image-tags: |
-        type=raw,value=${{ vars.N8N_VERSION }}
+        type=raw,value=${{ inputs.n8n-version || vars.N8N_VERSION }}
