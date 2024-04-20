@@ -9,6 +9,8 @@ RUN apt update \
         libvolk-dev \
         librtaudio-dev \
         libzstd-dev \
+        librtlsdr-dev \
+        libhackrf-dev \
     && curl -o sdrpp.deb -sSL "https://github.com/AlexandreRouma/SDRPlusPlus/releases/download/$SDRPP_VERSION/sdrpp_ubuntu_mantic_amd64.deb" \
     && dpkg -i sdrpp.deb \
     && rm sdrpp.deb \
