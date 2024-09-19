@@ -1,0 +1,15 @@
+[Unit]
+Description=MAAS Initial Setup
+After=maas-apiserver.service
+After=maas-temporal.service
+After=maas-regiond.service
+After=maas-rackd.service
+ConditionPathExists=!/var/lib/.maasSetupDone
+
+[Service]
+Type=oneshot
+EnvironmentFile=-/app/maas-setup.env
+ExecStart=/app/maas-setup.sh
+
+[Install]
+WantedBy=basic.target
