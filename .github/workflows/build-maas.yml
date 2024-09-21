@@ -26,6 +26,7 @@ jobs:
       output-registry: "ghcr.io"
       output-repository-path: "${{ github.repository }}/maas"
       dockerfile-path: "./maas/Dockerfile"
+      build-context: "./maas/"
       image-build-args: |
         MAAS_VERSION=${{ inputs.maas-version || vars.MAAS_VERSION }}
       image-tags: |
