@@ -1,0 +1,32 @@
+---
+
+name: Build maas image
+
+on:
+  push:
+    branches: [ "main" ]
+    tags: [ "v*.**" ]
+    paths: 
+    - ".github/workflows/build-maas.yml"
+    - "maas/**"
+  pull_request:
+    branches: [ "main" ]
+    paths: 
+    - ".github/workflows/build-maas.yml"
+    - "maas/**"
+  workflow_dispatch:
+    inputs:
+      maas-version:
+        description: "maas version to build"
+
+jobs:
+  build-docker-image:
+    uses: pirogoeth/workflows/.github/workflows/docker-generic.yml@main
+    with:
+      output-registry: "ghcr.io"
+      output-repository-path: "${{ github.repository }}/maas"
+      dockerfile-path: "./maas/Dockerfile"
+      image-build-args: |
+        MAAS_VERSION=${{ inputs.maas-version || vars.MAAS_VERSION }}
+      image-tags: |
+        type=raw,value=${{ inputs.maas-version || vars.MAAS_VERSION }}
