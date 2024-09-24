@@ -31,3 +31,5 @@ jobs:
         MAAS_VERSION=${{ inputs.maas-version || vars.MAAS_VERSION }}
       image-tags: |
         type=raw,value=${{ inputs.maas-version || vars.MAAS_VERSION }}
+      image-build-platforms: |
+        linux/amd64,linux/arm64,linux/arm/v7
