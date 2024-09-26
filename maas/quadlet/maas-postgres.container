@@ -1,0 +1,14 @@
+[Unit]
+Description=Postgres container for MAAS
+Before=maas-server.container
+RequiredBy=maas-server.container
+
+[Container]
+ContainerName=maas-postgres
+Image=docker.io/library/postgres:16-alpine
+Volume=maas-postgres-data.volume:/var/lib/postgresql/data
+EnvironmentFile=/etc/default/maas
+PublishPort=127.0.0.1:5432:5432
+
+[Install]
+WantedBy=multi-user.target
