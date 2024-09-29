@@ -1,7 +1,10 @@
 [Unit]
 Description=Postgres container for MAAS
-Before=maas-server.container
-RequiredBy=maas-server.container
+Before=maas-server.service
+RequiredBy=maas-server.service
+
+[Service]
+Restart=always
 
 [Container]
 ContainerName=maas-postgres
