@@ -20,7 +20,7 @@ on:
         description: "maas version to build"
 
 jobs:
-  build-docker-image:
+  build-docker-image-maas:
     uses: pirogoeth/workflows/.github/workflows/docker-generic.yml@main
     strategy:
       fail-fast: false
@@ -32,6 +32,25 @@ jobs:
       output-registry: "ghcr.io"
       output-repository-path: "${{ github.repository }}/maas"
       dockerfile-path: "./maas/Dockerfile"
+      build-context: "./maas/"
+      image-build-args: |
+        MAAS_VERSION=${{ inputs.maas-version || vars.MAAS_VERSION }}
+      image-tags: |
+        type=raw,value=${{ inputs.maas-version || vars.MAAS_VERSION }}
+      image-build-platforms: "${{ matrix.platform }}"
+
+  build-docker-image-maas-cli:
+    uses: pirogoeth/workflows/.github/workflows/docker-generic.yml@main
+    strategy:
+      fail-fast: false
+      matrix:
+        platform:
+        - linux/amd64
+        - linux/arm64
+    with:
+      output-registry: "ghcr.io"
+      output-repository-path: "${{ github.repository }}/maas-cli"
+      dockerfile-path: "./maas/Dockerfile.cli"
       build-context: "./maas/"
       image-build-args: |
         MAAS_VERSION=${{ inputs.maas-version || vars.MAAS_VERSION }}
