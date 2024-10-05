@@ -1,0 +1,22 @@
+FROM ubuntu:jammy
+
+ARG MAAS_VERSION=3.5
+
+RUN apt-get update \
+    && apt-get dist-upgrade -y \
+    && apt-get install -y \
+        software-properties-common \
+        sudo \
+    && apt-add-repository -y ppa:maas/${MAAS_VERSION} \
+    && apt-get update \
+    && apt-get install -y --no-install-recommends \
+        maas-cli \
+        python3-openssl \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /scripts
+ADD scripts/*.sh /scripts/
+RUN chmod +x /scripts/*.sh
+
+ENTRYPOINT ["/usr/bin/maas"]
