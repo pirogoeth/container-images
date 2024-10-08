@@ -82,6 +82,7 @@ function setup_maas() {
     if test ! -z "${MAAS_SETUP_DISABLE_POSTGRESQL}" ; then
         log "Disabling PostgreSQL..."
         systemctl disable --now postgresql
+        systemctl mask postgresql
 
         log "Configuring MAAS to use external database..."
         maas-region local_config_set \
@@ -143,23 +144,12 @@ function setup_maas() {
     rm /app/maas-setup.env
 }
 
-function start_normal() {
-    if test ! -z "${MAAS_SETUP_DISABLE_POSTGRESQL}" ; then
-        stop_maas_services
-        systemctl disable --now postgresql
-    fi
-
-    enable_now_maas_services
-}
-
 function main() {
     env
 
     if needs_setup; then
         setup_maas
     fi
-
-    start_normal
 }
 
 main
