@@ -12,6 +12,7 @@ Image=ghcr.io/pirogoeth/container-images/maas:3.5
 EnvironmentFile=/etc/default/maas
 Network=host
 PodmanArgs=--systemd=always --privileged
+Volume=maas-server-config.volume:/etc/maas/
 Volume=maas-server-data.volume:/var/lib/maas/
 
 [Install]

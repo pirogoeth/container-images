@@ -36,6 +36,6 @@ ADD . /app
 RUN cp /app/maas-setup.service /etc/systemd/system/maas-setup.service \
     && systemctl enable maas-setup
 
-VOLUME ["/etc/maas", "/var/lib/maas"]
+VOLUME ["/etc/maas", "/var/lib/maas", "/var/lib/postgresql"]
 
 ENTRYPOINT ["/app/docker-entrypoint.sh"]

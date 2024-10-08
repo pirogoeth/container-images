@@ -1,0 +1,6 @@
+[Unit]
+Description=MAAS config volume
+
+[Volume]
+User=root
+Group=root
