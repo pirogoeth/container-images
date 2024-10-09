@@ -4,6 +4,8 @@
 
 declare -a maas_services=(
     "maas-apiserver"
+    "maas-http"
+    "maas-proxy"
     "maas-rackd"
     "maas-regiond"
     "maas-temporal"
@@ -144,12 +146,25 @@ function setup_maas() {
     rm /app/maas-setup.env
 }
 
+function start_normal() {
+    log "Fixing /etc/maas permissions"
+    chown -v maas:maas /etc/maas
+
+    if test ! -z "${MAAS_SETUP_DISABLE_POSTGRESQL}" ; then
+        log "Disabling PostgreSQL..."
+        systemctl disable --now postgresql
+        systemctl mask postgresql
+    fi
+}
+
 function main() {
     env
 
     if needs_setup; then
         setup_maas
     fi
+
+    start_normal
 }
 
 main
