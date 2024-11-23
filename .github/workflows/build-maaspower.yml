@@ -1,0 +1,36 @@
+---
+
+name: Build maaspower image
+
+on:
+  push:
+    branches: [ "main" ]
+    tags: [ "v*.**" ]
+    paths: 
+    - ".github/workflows/build-maaspower.yml"
+    - "maaspower/**"
+  pull_request:
+    branches: [ "main" ]
+    paths: 
+    - ".github/workflows/build-maaspower.yml"
+    - "maaspower/**"
+  workflow_dispatch:
+    inputs:
+      maaspower-version:
+        description: "maaspower version to build"
+
+jobs:
+  build-docker-image-maaspower:
+    uses: pirogoeth/workflows/.github/workflows/docker-multiarch.yml@main
+    with:
+      output-registry: "ghcr.io"
+      output-repository-path: "${{ github.repository }}/maaspower"
+      dockerfile-path: "./maaspower/Dockerfile"
+      build-context: "./maaspower/"
+      image-build-args: |
+        maaspower_VERSION=${{ inputs.maas-version || vars.MAAS_VERSION }}
+      image-tag: |
+        ${{ inputs.maaspower-version || vars.MAAS_VERSION }}
+      image-build-platforms: |
+        linux/amd64
+        linux/arm64
