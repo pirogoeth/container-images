@@ -92,6 +92,8 @@ function do_startup_config() {
             --database-pass "${MAAS_SETUP_EXTERNAL_DATABASE_PASSWORD}" \
             --database-port "${MAAS_SETUP_EXTERNAL_DATABASE_PORT:-5432}"
         maas-region dbupgrade
+
+        restart_maas_services
     fi
 }
 
