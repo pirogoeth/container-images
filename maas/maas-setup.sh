@@ -77,10 +77,7 @@ function needs_setup() {
     return 1
 }
 
-function setup_maas() {
-    log "Setting up MAAS for the first time..."
-    stop_maas_services
-
+function do_startup_config() {
     if test ! -z "${MAAS_SETUP_DISABLE_POSTGRESQL}" ; then
         log "Disabling PostgreSQL..."
         systemctl disable --now postgresql
@@ -95,7 +92,14 @@ function setup_maas() {
             --database-pass "${MAAS_SETUP_EXTERNAL_DATABASE_PASSWORD}" \
             --database-port "${MAAS_SETUP_EXTERNAL_DATABASE_PORT:-5432}"
         maas-region dbupgrade
+    fi
+}
 
+function do_initial_setup() {
+    log "Setting up MAAS for the first time..."
+    stop_maas_services
+
+    if test ! -z "${MAAS_SETUP_DISABLE_POSTGRESQL}" ; then
         log "Initializing MAAS with external database..."
         maas init \
             --skip-admin \
@@ -160,8 +164,9 @@ function start_normal() {
 function main() {
     env
 
+    do_startup_config
     if needs_setup; then
-        setup_maas
+        do_initial_setup
     fi
 
     start_normal
