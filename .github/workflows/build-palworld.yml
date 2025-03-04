@@ -1,0 +1,37 @@
+---
+
+name: Build palworld image
+
+on:
+  push:
+    branches: [ "main" ]
+    tags: [ "v*.**" ]
+    paths: 
+    - ".github/workflows/build-palworld.yml"
+    - "palworld/**"
+  pull_request:
+    branches: [ "main" ]
+    paths: 
+    - ".github/workflows/build-palworld.yml"
+    - "palworld/**"
+  workflow_dispatch:
+    inputs:
+      steamcmd-version:
+        description: "Version of steamcmd image to use"
+  schedule:
+    - cron: '15 3 * * *'
+
+jobs:
+  build-docker-image-palworld:
+    uses: pirogoeth/workflows/.github/workflows/docker-multiarch.yml@main
+    with:
+      output-registry: "ghcr.io"
+      output-repository-path: "${{ github.repository }}/palworld"
+      dockerfile-path: "./palworld/Dockerfile"
+      build-context: "./palworld/"
+      image-build-args: |
+        STEAMCMD_VERSION=${{ inputs.steamcmd-version || vars.STEAMCMD_VERSION }}
+      image-tag: |
+        latest
+      image-build-platforms: |
+        linux/amd64
