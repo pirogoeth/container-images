@@ -28,3 +28,5 @@ EXPOSE 8211/udp
 EXPOSE 8212/tcp
 # RCON port
 EXPOSE 25575/tcp
+
+VOLUME ["/game/Pal/Saved/Config/LinuxServer/PalWorldSettings.ini", "/game/Pal/Saved/SaveGames"]
