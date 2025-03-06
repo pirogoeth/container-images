@@ -10,8 +10,8 @@ RUN apt update \
 
 USER game
 
-ENV USER game
-ENV HOME /game
+ENV USER=game
+ENV HOME=/game
 
 WORKDIR /game
 
