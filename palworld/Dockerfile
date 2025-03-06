@@ -22,6 +22,9 @@ RUN steamcmd \
     +quit
 
 ENTRYPOINT ["bash", "/game/PalServer.sh"]
-EXPOSE 8211/udp    # game server port
-EXPOSE 8212/tcp    # game REST API port
-EXPOSE 25575/tcp   # RCON port
+# game server port
+EXPOSE 8211/udp
+# game REST API port
+EXPOSE 8212/tcp
+# RCON port
+EXPOSE 25575/tcp
