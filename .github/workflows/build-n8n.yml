@@ -26,6 +26,7 @@ jobs:
       output-registry: "ghcr.io"
       output-repository-path: "${{ github.repository }}/n8n"
       dockerfile-path: "./n8n/Dockerfile"
+      build-context: "./n8n/"
       image-build-args: |
         N8N_VERSION=${{ inputs.n8n-version || vars.N8N_VERSION }}
       image-tags: |
